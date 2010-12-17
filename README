@@ -1,0 +1,3 @@
+Framework for batch program on windows.
+
+Logging, Error Handling, Exclusive control, Pluggable configuration file, Unit Tests, and etc...
