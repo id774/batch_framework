@@ -1,6 +1,9 @@
 @echo off
 goto main
 
+:plugins
+    goto final
+
 :sysenv
     set PROJECT_ROOT=%PWD%
     set JOBLOG=%PROJECT_ROOT%\sample.log
@@ -32,6 +35,14 @@ goto main
         time /t>>%JOBLOG%
         echo ### Job Ended ###>>%JOBLOG%
 
+    :: Send Mail
+        cd /d %PWD%>nul
+        if %ALART_LEVEL% GEQ 1 (
+            cscript /b sendmail.vbs ^
+                "[%COMPUTERNAME%] %PROJECT_NAME% - Job Ended" ^
+                "Job Ended."
+        )
+
         if exist %LOCK% del /q /f %LOCK%
     goto shutdown
 
@@ -46,10 +57,18 @@ goto main
         time /t>>%JOBLOG%
         echo ### Job Started ###>>%JOBLOG%
 
+    :: Send Mail
+        cd /d %PWD%>nul
+        if %ALART_LEVEL% GEQ 1 (
+            cscript /b sendmail.vbs ^
+                "[%COMPUTERNAME%] %PROJECT_NAME% - Job Started" ^
+                "Job Started."
+        )
+
     :setup_methods
         set METHODS= ^
             methods ^
-            final
+            plugins
 
     if "%2"=="test" goto exit
     call %0 %METHODS%
