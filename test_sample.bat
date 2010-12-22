@@ -6,6 +6,7 @@ goto main
     goto end_sysenv
 
 :clear_sysenv
+    set METHODS=
     set TESTPWD=
     set EXPECT=
     set ACTUAL=

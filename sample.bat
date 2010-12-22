@@ -2,7 +2,7 @@
 goto main
 
 :plugins
-    goto final
+    goto end
 
 :sysenv
     set PROJECT_ROOT=%PWD%
@@ -44,7 +44,7 @@ goto main
         )
 
         if exist %LOCK% del /q /f %LOCK%
-    goto shutdown
+    goto plugins
 
 :initial
     :: Wait for lock
@@ -67,8 +67,7 @@ goto main
 
     :setup_methods
         set METHODS= ^
-            methods ^
-            plugins
+            methods
 
     if "%2"=="test" goto exit
     call %0 %METHODS%
